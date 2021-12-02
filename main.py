@@ -17,5 +17,4 @@ names_course = info_course.get_content(
     "div", "flex flex-row justify-between", "names course")
 
 data_all_api = Control(times_course, number_course, names_course)
-data_all_api.get_data(number_course)
-print(time.perf_counter() - start)
+print(data_all_api.get_data(number_course), time.perf_counter() - start)
