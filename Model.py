@@ -51,23 +51,24 @@ class InfoCourse:
 
 
 class Pronostic:
-    def __init__(self, data: dict):
+    def __init__(self, data: list, index: int):
         self.data = data 
+        self.index = index
 
     def get_number_cours(self): 
-        return self.data["participants"]["nombre course"]
+        return self.data[self.index]["participants"]["nombre course"]
 
     def get_number_victory(self): 
-        return self.data["participants"]["nombre victoire"]
+        return self.data[self.index]["participants"]["nombre victoire"]
     
     def get_place(self): 
-        return self.data["participants"]["nombre placée"]
+        return self.data[self.index]["participants"]["nombre placée"]
 
     def get_place_secondary(self): 
-        return self.data["participants"]["nombre placée second"]
+        return self.data[self.index]["participants"]["nombre placée second"]
 
     def get_place_three(self): 
-        return self.data["participants"]["nombre placée troisieme"]
+        return self.data[self.index]["participants"]["nombre placée troisieme"]
     
     def get_all_detail(self):
         return self.get_number_cours, self.get_number_victory, self.get_place, self.get_place_secondary, self.get_place_three
@@ -75,12 +76,20 @@ class Pronostic:
     def pourcent_win(self):
         for index, _ in enumerate(self.get_number_cours()): 
             try: 
-                pourcent_place = 100*(self.get_place()[index] + self.get_place_secondary()[index]+ self.get_place_three()[index])/self.get_number_cours()[index]
-                pourcent_victory = 100*self.get_number_victory()[index]/self.get_number_cours()[index]
+                pourcent_place = 100*(self.get_place()[index] + self.get_place_secondary()[index])//self.get_number_cours()[index]
+                pourcent_victory = 100*self.get_number_victory()[index]//self.get_number_cours()[index]
             except ZeroDivisionError: 
                 pourcent_place = 0 
                 pourcent_victory = 0
 
-        self.data["participants"]["chance_gagner_place"].append(pourcent_place)
-        self.data["participants"]["chance de gagner"].append(pourcent_victory)
+        self.data[self.index]["participants"]["chance_gagner_place"].append(pourcent_place)
+        self.data[self.index]["participants"]["chance de gagner"].append(pourcent_victory)
         return self.data
+
+
+    def more_chance_win(self): 
+        chance_win = self.data[self.index]["participants"]["chance de gagner"]
+        chance_place = self.data[self.index]["participants"]["chance_gagner_place"]
+        chance_place.sort()
+        chance_win.sort()
+        print(chance_win[-4:],'---',chance_place[-4:])
