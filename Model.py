@@ -92,4 +92,7 @@ class Pronostic:
         chance_place = self.data[self.index]["participants"]["chance_gagner_place"]
         chance_place.sort()
         chance_win.sort()
-        print(chance_win[-4:],'---',chance_place[-4:])
+        for most_win, most_place in zip(chance_win[-4:], chance_place[-4:]): pass 
+        """
+            j'ai recuperer les 4 meuilleur score, il reste a recuperer les nom des personne presente dans la liste
+        """
