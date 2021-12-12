@@ -30,13 +30,6 @@ class Control:
         with open(self.NAME_FILE_DATE, "a") as f_data:
             json.dump(data, f_data, indent=1, ensure_ascii=False)
 
-    def data_is_save(self): 
-        if os.path.exists(self.NAME_FILE_DATE): 
-            if date_today in self.NAME_FILE_DATE:
-                return True 
-        return False
-
-
 
     def get_data(self, course: list[str]):  # recupere les donne de l'api
         data = []
@@ -66,5 +59,6 @@ class Control:
                     prono = Model.Pronostic(data, index)
                     data_with_prono = prono.pourcent_win() #retorune le nouveuax dictionnaire avec les pourcenatage de gagne est de placement pour cahque joueur  
             prono.more_chance_win()
-        self.save_data(data_with_prono)
+        # self.save_data(data_with_prono)
         return "Données sauvegarder" 
+

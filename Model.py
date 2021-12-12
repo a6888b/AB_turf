@@ -12,7 +12,7 @@ def get_tab():  # renvoie lee tableaux avec tout les match present
     r = requests.get(URL)
     if r.ok:
         soup = bs4.BeautifulSoup(r.content, "lxml")
-        return[ tab for tab in soup.find_all("div", class_="css-1f5cnfe e91l0ui0")] # css-r7epeu e91l0ui0
+        return[ tab for tab in soup.find_all("div", class_="css-1t5gcnr e91l0ui0")] # css-r7epeu e91l0ui0  css-1f5cnfe e91l0ui0 css-1t5gcnr e91l0ui0
 
 
 
@@ -55,6 +55,9 @@ class Pronostic:
         self.data = data 
         self.index = index
 
+    def get_name_participant(self): 
+        return self.data[self.index]["participants"]["nom"]
+
     def get_number_cours(self): 
         return self.data[self.index]["participants"]["nombre course"]
 
@@ -86,13 +89,29 @@ class Pronostic:
         self.data[self.index]["participants"]["chance de gagner"].append(pourcent_victory)
         return self.data
 
+    
+    def get_name_participants_prono(self, index: int):
+        print(self.get_name_participant()[index])
+        print(index)
+        # try: 
+        #     return self.get_name_participant().index(index)
+        # except ValueError: 
+        #     return ""
 
     def more_chance_win(self): 
         chance_win = self.data[self.index]["participants"]["chance de gagner"]
         chance_place = self.data[self.index]["participants"]["chance_gagner_place"]
         chance_place.sort()
         chance_win.sort()
-        for most_win, most_place in zip(chance_win[-4:], chance_place[-4:]): pass 
+
+        for most_win, most_place in zip(chance_win[-4:], chance_place[-4:]): 
+            print(most_win)
+            names_particpants_most_win = self.get_name_participants_prono(most_win)
+            # names_particpants_most_place = self.get_name_participants_prono(most_place)
+            # print(most_place, most_win)
+            # print(names_particpants_most_win, names_particpants_most_place)
+            print("-------------")
+
         """
-            j'ai recuperer les 4 meuilleur score, il reste a recuperer les nom des personne presente dans la liste
+faire un aalgo de tri pour trier est prendre le nom de participants qui a plus de chance...
         """
